@@ -56,7 +56,20 @@ class RunLog:
             f.write(json.dumps(event, ensure_ascii=False, default=str) + "\n")
 
 
-
+class LLMClient:
+    def __init__(self, base_url: str | None = None, api_key: str | None = None,
+                 model: str | None = None, log: RunLog | None = None,
+                 max_retries: int = MAX_RETRIES, timeout: float | None = None):
+        self.base_url = base_url or os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1")
+        self.model = model or os.getenv("LLM_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
+        key = api_key or os.getenv("LLM_API_KEY") or "not-set"
+        # A 7B model on a laptop CPU can take minutes for a long prompt.
+        timeout = timeout or float(os.getenv("LLM_TIMEOUT", "300"))
+        self._client = openai.OpenAI(base_url=self.base_url, api_key=key, timeout=timeout,
+                                     max_retries=0)  # we retry ourselves, visibly
+        self.create = self._client.chat.completions.create   # replaceable in tests
+        self.log = log or RunLog()
+        self.max_retries = max_retries
 
     # ── retry ──
 
