@@ -3,3 +3,7 @@ sqlalchemy>=2.0
 python-dotenv>=1.0
 openai>=1.40
 pytest>=8
+sentence-transformers>=3.0
+faiss-cpu>=1.8
+chromadb>=0.5
+pypdf>=4.0
