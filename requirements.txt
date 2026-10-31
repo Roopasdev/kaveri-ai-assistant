@@ -1,3 +1,5 @@
-pandas
-sqlalchemy
-python-dotenv
+pandas>=2.2
+sqlalchemy>=2.0
+python-dotenv>=1.0
+openai>=1.40
+pytest>=8
