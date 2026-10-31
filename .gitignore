@@ -1,0 +1,11 @@
+# secrets: never commit these
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# built from the data on every machine (load_db.py and the ingest scripts rebuild them)
+*.db
+indexes/
