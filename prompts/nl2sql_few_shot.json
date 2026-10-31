@@ -1,0 +1,26 @@
+[
+  {
+    "question": "How many orders were placed in 2024?",
+    "sql": "SELECT COUNT(*) FROM orders WHERE order_date LIKE '2024-%'"
+  },
+  {
+    "question": "What was the total revenue from customers in France in 2023?",
+    "sql": "SELECT ROUND(SUM(o.total_amount), 2) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.country = 'France' AND o.order_date LIKE '2023-%'"
+  },
+  {
+    "question": "Which product earned the most revenue in 2023?",
+    "sql": "SELECT p.product_name FROM order_items i JOIN orders o ON o.order_id = i.order_id JOIN products p ON p.product_id = i.product_id WHERE o.status <> 'cancelled' AND o.order_date LIKE '2023-%' GROUP BY p.product_name ORDER BY SUM(i.line_total) DESC LIMIT 1"
+  },
+  {
+    "question": "Which region earned the most revenue in 2023?",
+    "sql": "SELECT r.region_name FROM orders o JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.order_date LIKE '2023-%' GROUP BY r.region_name ORDER BY SUM(o.total_amount) DESC LIMIT 1"
+  },
+  {
+    "question": "Which region had the most customers?",
+    "sql": "SELECT r.region_name FROM customers c JOIN regions r ON r.region_id = c.region_id GROUP BY r.region_name ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "question": "What percentage of 2023 orders came through the Direct channel?",
+    "sql": "SELECT ROUND(100.0 * SUM(sales_channel = 'Direct') / COUNT(*), 2) FROM orders WHERE order_date LIKE '2023-%'"
+  }
+]
