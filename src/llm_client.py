@@ -29,9 +29,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MAX_RETRIES = 5
-BASE_WAIT_S = 1.0
-MAX_WAIT_S = 30.0
 
 
 @dataclass
